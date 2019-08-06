@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block upload_active %}active{% endblock %}
+{% block title %}New Upload{% endblock %}
+{% block body %}
+  <br>
+  <div class="container">
+    <h2>Create new upload</h2>
+    <hr>
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="form-row">
+        <div class="col-sm-12 col-md-4">
+          <input name="title" autocomplete="off" id="name" class="form-control" placeholder="Upload Name" autofocus required>
+        </div>
+      </div>
+      <br>
+      <div class="form-row">
+        <div class="col-sm-12 col-md-4">
+          <select name="album_id" class="custom-select" required>
+            {% for album in albums %}
+              <option value="{{ album.id }}">{{ album.name }}</option>
+            {% empty %}
+              <option value="-1" disabled>Please create a form first.</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <br>
+      <div class="form-row">
+        <div class="col-sm-12 col-md-4">
+          <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">By</span>
+            </div>
+            <input type="text" autocomplete="off" id="creator" class="form-control" value="anonymous">
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="form-row">
+        <div class="col-sm-12 col-md-6">
+          <textarea name="description" id="description" placeholder="Description" class="form-control" required rows="10"></textarea>
+        </div>
+      </div>
+      <br>
+      <div class="form-row">
+        <div class="col-sm-12 col-md-6">
+          <input type="file" name="file">
+        </div>
+      </div>
+      <br>
+      {% if error %}
+        <p class="text-danger">{{ error }}</p>
+      {% endif %}
+      <button type="submit" class="btn btn-success">Create</button>
+    </form>
+  </div>
+{% endblock %}

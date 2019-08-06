@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>{% block title %}Lottery{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- BOOTSTRAP AND FAVICON GOES HERE -->
+  <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'vendor/fontawesome/css/all.min.css' %}">
+  {% block head %}
+  {% endblock %}
+</head>
+  <body>
+    <!-- NAVBAR GOES HERE -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="{% url 'album:index' %}">Lottery</a>
+        <div class="collapse navbar-collapse" id="navbarToggler">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item {% block home_active %}{% endblock %}">
+              <a class="nav-link" href="{% url 'album:index' %}">Home</span></a>
+            </li>
+            <li class="nav-item {% block search_active %}{% endblock %}">
+              <a class="nav-link" href="#">Search</a>
+            </li>
+            <li class="nav-item {% block new_active %}{% endblock %}">
+              <a class="nav-link" href="{% url 'album:new' %}">New</a>
+            </li>
+            <li class="nav-item {% block upload_active %}{% endblock %}">
+              <a class="nav-link" href="{% url 'uploader:upload' %}">Upload</a>
+            </li>
+          </ul>
+          <form class="form-inline mt-2 mt-md-0">
+            <div class="input-group">
+                <input class="form-control" type="text" placeholder="Search" aria-label="Search">
+                <div class="input-group-append">
+                  <button class="btn btn-primary" type="submit">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </nav>
+    {% for message in messages %}
+      <div class="container" style="padding-top: 20px;">
+        <div class="alert alert-{{message.tags}} alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          {{ message }}
+        </div>
+      </div>
+    {% endfor %}
+    {% block body %}
+    {% endblock %}
+    <!-- FOOTER AND JAVASCRIPT GOES HERE -->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    {% block js %}
+    {% endblock %}
+  </body>
+</html>

@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block home_active %}active{% endblock %}
+{% block body %}
+<br><br>
+<div class="container">
+  <h2>Public Albums 
+      <a href="{% url 'album:new' %}" class="btn btn-success"><i class="fas fa-plus"></i></a>
+      <button class="btn btn-danger" id="delete-album"><i class="fas fa-minus"></i></button></h2>
+  <hr>
+  {% if albums %}
+    <ul class="list-group">
+      {% for album in albums %}
+        <a href="{% url 'album:detail' album.pk %}"
+          class="list-group-item d-flex justify-content-between list-group-item-action align-items-center">
+          {{ album.name }}
+          <span class="badge badge-primary badge-pill">{{ album.uploads.count }} items</span>
+        </a>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <h5 class="text-muted">
+      <span class="text-danger">No albums exist.</span> Create a <a href="{% url 'album:new' %}">new one</a>.
+    </h5>
+  {% endif %}
+</div>
+{% endblock %}
+{% block js %}
+<script>
+  $('#delete-album').popover({
+    trigger: 'hover',
+    placement: 'right',
+    delay: {"hide": 500},
+    title: "Request Deletion",
+    content: "Select an album and a request for termination will be sent to the admin."
+  });
+</script>
+{% endblock %}

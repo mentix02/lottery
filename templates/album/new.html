@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block new_active %}active{% endblock %}
+{% block title %}New Album{% endblock %}
+{% block body %}
+  <br><br>
+  <div class="container">
+    <h2>Create new album</h2>
+    <hr>
+    <form method="POST">
+      {% csrf_token %}
+      <div class="form-row">
+        <div class="col-sm-12 col-md-4">
+          <input name="name" autocomplete="off" id="name" class="form-control" placeholder="Album Name" autofocus required>
+        </div>
+      </div>
+      <br>
+      <div class="form-row">
+        <div class="col-sm-12 col-md-4">
+          <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">By</span>
+            </div>
+            <input type="text" autocomplete="off" id="creator" class="form-control" value="anonymous">
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="form-row">
+          <div class="col-sm-12 col-md-6">
+            <textarea name="description" id="description" placeholder="Description" class="form-control" required rows="10"></textarea>
+          </div>
+      </div>
+      <br>
+      {% if error %}
+        <p class="text-danger">{{ error }}</p>
+      {% endif %}
+      <button type="submit" class="btn btn-success">Create</button>
+    </form>
+  </div>
+{% endblock %}

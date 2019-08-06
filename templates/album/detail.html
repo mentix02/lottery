@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block title %}
+  {{ album.name }}
+{% endblock %}
+{% block body %}
+<br>
+<div class="container">
+  <h2>
+    {{ album.name }}
+    <a href="{% url 'uploader:upload' %}?album_id={{ album.id }}" class="btn btn-success"><i class="fas fa-plus"></i></a>
+  </h2>
+  <h4 style="font-size: 140%">
+    {{ album.description }} <br>
+    <small class="text-muted">Created on {{ album.timestamp }} by {{ album.creator }}</small>
+  </h4>
+  <hr>
+  {% if album.uploads.all %}
+    <div class="table-responsive-sm">
+      <table class="table table-striped">
+        <thead class="">
+          <tr>
+            <th scope="col">Key</th>
+            <th scope="col">Title</th>
+            <th scope="col">Uploader</th>
+            <th scope="col">Uploaded</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for upload in album.uploads.all %}
+            <tr>
+              <td>{{ upload.pk }}</td>
+              <td>{{ upload.title }}</td>
+              <td>{{ upload.creator }}</td>
+              <td>{{ upload.timestamp | timesince }}</td>
+              <td>
+                <a href="{{ upload.file.url }}" class="btn btn-sm btn-success" download>
+                  <i class="fas fa-download"></i>
+                </a><!-- 
+                <a href="#" class="btn btn-sm btn-danger">
+                  <i class="fas fa-trash"></i>
+                </a> -->
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <h4 class="text-danger">No uploads in this album.</h4>
+  {% endif %}
+</div>
+
+{% endblock %}
