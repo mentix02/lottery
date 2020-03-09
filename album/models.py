@@ -6,7 +6,7 @@ class Album(models.Model):
 
     name = models.CharField(max_length=100)
     private = models.BooleanField(default=False)
-    description = models.TextField(max_length=250)
+    description = models.TextField(max_length=250, null=True)
     timestamp = models.DateTimeField(auto_now_add=True)
     creator = models.CharField(max_length=100, default='anonymous', blank=True)
 
